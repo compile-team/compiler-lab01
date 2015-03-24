@@ -40,7 +40,7 @@ ELSE else
 WHILE while
 
 %%
-{digits}|{digit} {;}
+{digits|digit} {;}
 {float} {;}
 {letter} {;}
 ";"|","|"int"|"float"|"="|" " {;}
