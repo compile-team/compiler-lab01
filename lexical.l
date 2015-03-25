@@ -40,9 +40,10 @@ ELSE else
 WHILE while
 
 %%
-{digits}|{digit} {;}
-{float} {;}
-{letter} {;}
+{digits}|{digit} {printf("digits at line %d\n",line);}
+{float} {printf("float at line %d\n",line);}
+{letter} {printf("letter at line %d\n",line);}
+{id} {printf("id at line %d\n",line);}
 ";"|","|"int"|"float"|"="|" " {;}
 \n {line++;}
 . {printf("error type A at:%d at %s\n",line,yytext);}
