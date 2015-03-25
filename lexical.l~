@@ -11,7 +11,7 @@ digits [digit]+
 letter [a-zA-Z]
 letters [letter]+
 int [+-]?(0|[1-9]([0-9])*)
-float ([+-]?([0-9]*\.[0-9]+|[0-9]+\.))|([+-]?[0-9]*(\.)?[0-9]*[Ee][+-]?digits)
+float ([+-]?[0-9]*[\.]?[0-9]*[eE][+-]?[0-9]+)|([+-]?([0-9]*\.[0-9]+|[0-9]+\.))
 id [a-zA-Z]([_0-9a-zA-Z])*
 demin [ \t]
 semi ;
@@ -40,11 +40,11 @@ ELSE else
 WHILE while
 
 %%
-{digits}|{digit} {printf("digits at line %d\n",line);}
-{float} {printf("float at line %d\n",line);}
-{letter} {printf("letter at line %d\n",line);}
+";"|","|"int"|"float"|"="|" "|"{"|"}"|"("|")"|"	" {printf("type or character at line %d\n",line);}
+{float} {printf("float at line %d at %s\n",line,yytext);}
+{int} {printf("int at line %d at %s\n",line,yytext);}
+{letter} {printf("letter at line %d at %s\n",line,yytext);}
 {id} {printf("id at line %d\n",line);}
-";"|","|"int"|"float"|"="|" " {;}
 \n {line++;}
 . {printf("error type A at:%d at %s\n",line,yytext);}
 

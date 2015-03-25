@@ -1,14 +1,9 @@
-<<<<<<< HEAD
-hahaha
-=======
-1.
-.1
-2.3
-2.3e-6
-0
-2
-e23
-e_23
-;
-,
->>>>>>> e57e9b3d7cfcfda577e625e65851922fe1349bd6
+int main(){
+	int a;
+	int b;
+	int c=~b;
+	float d = 2E6;
+	int e = -1;
+-1;
+1.2
+}
