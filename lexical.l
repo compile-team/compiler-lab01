@@ -44,7 +44,7 @@ WHILE while
 {float} {printf("float at line %d\n",line);}
 {letter} {printf("letter at line %d\n",line);}
 {id} {printf("id at line %d\n",line);}
-";"|","|"int"|"float"|"="|" " {;}
+";"|","|"int"|"float"|"="|" "|"{"|"}"|"("|")"|"	" {;}
 \n {line++;}
 . {printf("error type A at:%d at %s\n",line,yytext);}
 
