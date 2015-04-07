@@ -43,6 +43,7 @@ WHILE while
 %%
 
 " "|"	" {printf("type or character at line %d\n",line);}
+<<<<<<< HEAD
 "int"|float {printf("type at line %d\n",line); return TYPE;}
 "(" {return LP;}
 ")" {return RP;}
@@ -60,6 +61,25 @@ WHILE while
 "=" {return ASSIGNOP;}
 {FLOAT} {printf("float at line %d at %s\n",line,yytext); yylval.type_float = atoi(yytext);return FLOAT;}
 {INT} {printf("int at line %d at %s\n",line,yytext);yylval.type_int = atoi(yytext); return INT;}
+=======
+"int"|float {printf("type at line %d\n",line);}
+"(" {/*return LP;*/}
+")" {/*return RP;*/}
+"[" {/*return LB;*/}
+"]" {/*return RB;*/}
+"{" {/*return LC;*/}
+"}" {/*return RC;*/}
+"struct" {/*return STRUCT;*/}
+"return" {/*return RETURN;*/}
+"if" {/*return IF;*/}
+"else" {/*return ELSE;*/}
+"while" {/*return WHILE;*/}
+";" {/*return SEMI;*/}
+"," {/*return COMMA;*/}
+"=" {/*return ASSIGNOP;*/}
+{FLOAT} {printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval.type_float = atoi(yytext); return FLOAT;}
+{INT} {printf("int at line %d at %s\n",line,yytext); yylval.type_int = atoi(yytext); return INT;}
+>>>>>>> dc922aa0818a394aaa1ef74619440af31f28b23b
 {ID} {printf("id at line %d\n",line); /*yylval = atoi(yytext); return ID;*/}
 \n {line++;/* yycolumn = 1;*/}
 "+" {return ADD;}

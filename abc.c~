@@ -1,4 +1,9 @@
-int main
-a;
+<<<<<<< HEAD
+int main(){
+int a;
+}
 
 
+=======
+10.5-2.0
+>>>>>>> dc922aa0818a394aaa1ef74619440af31f28b23b
