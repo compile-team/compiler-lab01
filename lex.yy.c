@@ -824,87 +824,87 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 46 "lexical.l"
-{printf("type at line %d\n",line);}
+{printf("type at line %d\n",line); return TYPE;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
 #line 47 "lexical.l"
-{/*return LP;*/}
+{return LP;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 48 "lexical.l"
-{/*return RP;*/}
+{return RP;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 49 "lexical.l"
-{/*return LB;*/}
+{return LB;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 50 "lexical.l"
-{/*return RB;*/}
+{return RB;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 51 "lexical.l"
-{/*return LC;*/}
+{return LC;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 52 "lexical.l"
-{/*return RC;*/}
+{return RC;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 53 "lexical.l"
-{/*return STRUCT;*/}
+{return STRUCT;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 54 "lexical.l"
-{/*return RETURN;*/}
+{return RETURN;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 55 "lexical.l"
-{/*return IF;*/}
+{return IF;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 56 "lexical.l"
-{/*return ELSE;*/}
+{return ELSE;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 57 "lexical.l"
-{/*return WHILE;*/}
+{return WHILE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 58 "lexical.l"
-{/*return SEMI;*/}
+{return SEMI;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 59 "lexical.l"
-{/*return COMMA;*/}
+{return COMMA;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 60 "lexical.l"
-{/*return ASSIGNOP;*/}
+{return ASSIGNOP;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 61 "lexical.l"
-{printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval = atoi(yytext); return FLOAT;}
+{printf("float at line %d at %s\n",line,yytext); yylval.type_float = atoi(yytext);return FLOAT;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 62 "lexical.l"
-{printf("int at line %d at %s\n",line,yytext); yylval = atoi(yytext); return INT;}
+{printf("int at line %d at %s\n",line,yytext);yylval.type_int = atoi(yytext); return INT;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
@@ -940,17 +940,17 @@ YY_RULE_SETUP
 case 25:
 YY_RULE_SETUP
 #line 69 "lexical.l"
-{/*return AND;*/}
+{return AND;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 70 "lexical.l"
-{/*return OR;*/}
+{return OR;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 71 "lexical.l"
-{/*return NOT;*/}
+{return NOT;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP

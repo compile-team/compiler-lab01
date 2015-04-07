@@ -43,32 +43,32 @@ WHILE while
 %%
 
 " "|"	" {printf("type or character at line %d\n",line);}
-"int"|float {printf("type at line %d\n",line);}
-"(" {/*return LP;*/}
-")" {/*return RP;*/}
-"[" {/*return LB;*/}
-"]" {/*return RB;*/}
-"{" {/*return LC;*/}
-"}" {/*return RC;*/}
-"struct" {/*return STRUCT;*/}
-"return" {/*return RETURN;*/}
-"if" {/*return IF;*/}
-"else" {/*return ELSE;*/}
-"while" {/*return WHILE;*/}
-";" {/*return SEMI;*/}
-"," {/*return COMMA;*/}
-"=" {/*return ASSIGNOP;*/}
-{FLOAT} {printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval = atoi(yytext); return FLOAT;}
-{INT} {printf("int at line %d at %s\n",line,yytext); yylval = atoi(yytext); return INT;}
+"int"|float {printf("type at line %d\n",line); return TYPE;}
+"(" {return LP;}
+")" {return RP;}
+"[" {return LB;}
+"]" {return RB;}
+"{" {return LC;}
+"}" {return RC;}
+"struct" {return STRUCT;}
+"return" {return RETURN;}
+"if" {return IF;}
+"else" {return ELSE;}
+"while" {return WHILE;}
+";" {return SEMI;}
+"," {return COMMA;}
+"=" {return ASSIGNOP;}
+{FLOAT} {printf("float at line %d at %s\n",line,yytext); yylval.type_float = atoi(yytext);return FLOAT;}
+{INT} {printf("int at line %d at %s\n",line,yytext);yylval.type_int = atoi(yytext); return INT;}
 {ID} {printf("id at line %d\n",line); /*yylval = atoi(yytext); return ID;*/}
 \n {line++;/* yycolumn = 1;*/}
 "+" {return ADD;}
 "-" {return SUB;}
 "*" {return MUL;}
 "/" {return DIV;}
-"&&" {/*return AND;*/}
-"||" {/*return OR;*/}
-"!" {/*return NOT;*/}
+"&&" {return AND;}
+"||" {return OR;}
+"!" {return NOT;}
 . {printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
 
 %% 

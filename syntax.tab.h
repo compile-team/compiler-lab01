@@ -47,12 +47,31 @@ extern int yydebug;
   {
     INT = 258,
     FLOAT = 259,
-    ADD = 260,
-    SUB = 261,
-    MUL = 262,
-    DIV = 263,
-    LP = 264,
-    RP = 265
+    ID = 260,
+    TYPE = 261,
+    ADD = 262,
+    SUB = 263,
+    MUL = 264,
+    DIV = 265,
+    AND = 266,
+    OR = 267,
+    NOT = 268,
+    LP = 269,
+    RP = 270,
+    LB = 271,
+    RB = 272,
+    LC = 273,
+    RC = 274,
+    SEMI = 275,
+    COMMA = 276,
+    STRUCT = 277,
+    RETURN = 278,
+    IF = 279,
+    ELSE = 280,
+    WHILE = 281,
+    ASSIGNOP = 282,
+    ASSIGN = 283,
+    LOWER_THAN_ELSE = 284
   };
 #endif
 
@@ -67,7 +86,7 @@ union YYSTYPE
 	float type_float;
 	double type_double;
 
-#line 71 "syntax.tab.h" /* yacc.c:1909  */
+#line 90 "syntax.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
