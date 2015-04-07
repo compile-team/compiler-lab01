@@ -14,7 +14,7 @@
   %token ADD SUB MUL DIV 
  
   /* declared non-terminals */ 
-  %type <type_float> Exp Factor Term 
+  %type <type_double> Exp Factor Term 
  
   %% 
   Calc :  /* empty */ 
