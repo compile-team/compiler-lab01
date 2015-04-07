@@ -58,8 +58,8 @@ WHILE while
 ";" {/*return SEMI;*/}
 "," {/*return COMMA;*/}
 "=" {/*return ASSIGNOP;*/}
-{FLOAT} {printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval = atoi(yytext); return FLOAT;}
-{INT} {printf("int at line %d at %s\n",line,yytext); yylval = atoi(yytext); return INT;}
+{FLOAT} {printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval.type_float = atoi(yytext); return FLOAT;}
+{INT} {printf("int at line %d at %s\n",line,yytext); yylval.type_int = atoi(yytext); return INT;}
 {ID} {printf("id at line %d\n",line); /*yylval = atoi(yytext); return ID;*/}
 \n {line++;/* yycolumn = 1;*/}
 "+" {return ADD;}

@@ -6,7 +6,6 @@
 #include "syntax.tab.h"
 	int line=1;
 	int yycolumn = 1;
-	int yylval;
 %}
 
 digit [0-9]

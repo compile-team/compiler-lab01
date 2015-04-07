@@ -899,12 +899,12 @@ YY_RULE_SETUP
 case 17:
 YY_RULE_SETUP
 #line 61 "lexical.l"
-{printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval = atoi(yytext); return FLOAT;}
+{printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval.type_float = atoi(yytext); return FLOAT;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 62 "lexical.l"
-{printf("int at line %d at %s\n",line,yytext); yylval = atoi(yytext); return INT;}
+{printf("int at line %d at %s\n",line,yytext); yylval.type_int = atoi(yytext); return INT;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP

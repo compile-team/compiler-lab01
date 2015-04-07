@@ -50,9 +50,7 @@ extern int yydebug;
     ADD = 260,
     SUB = 261,
     MUL = 262,
-    DIV = 263,
-    LP = 264,
-    RP = 265
+    DIV = 263
   };
 #endif
 
@@ -61,13 +59,14 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 7 "syntax.y" /* yacc.c:1909  */
+#line 6 "syntax.y" /* yacc.c:1909  */
+  
+    int type_int;  
+    float type_float;  
+    double type_double;
+ 
 
-	int type_int;
-	float type_float;
-	double type_double;
-
-#line 71 "syntax.tab.h" /* yacc.c:1909  */
+#line 70 "syntax.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
