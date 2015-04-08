@@ -56,22 +56,24 @@ extern int yydebug;
     AND = 266,
     OR = 267,
     NOT = 268,
-    LP = 269,
-    RP = 270,
-    LB = 271,
-    RB = 272,
-    LC = 273,
-    RC = 274,
-    SEMI = 275,
-    COMMA = 276,
-    STRUCT = 277,
-    RETURN = 278,
-    IF = 279,
-    ELSE = 280,
-    WHILE = 281,
-    ASSIGNOP = 282,
-    ASSIGN = 283,
-    LOWER_THAN_ELSE = 284
+    RELOP = 269,
+    LP = 270,
+    RP = 271,
+    LB = 272,
+    RB = 273,
+    LC = 274,
+    RC = 275,
+    SEMI = 276,
+    COMMA = 277,
+    STRUCT = 278,
+    RETURN = 279,
+    IF = 280,
+    ELSE = 281,
+    WHILE = 282,
+    ASSIGNOP = 283,
+    DOT = 284,
+    ASSIGN = 285,
+    LOWER_THAN_ELSE = 286
   };
 #endif
 
@@ -80,11 +82,9 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 7 "syntax.y" /* yacc.c:1909  */
+#line 8 "syntax.y" /* yacc.c:1909  */
 
-	int type_int;
-	float type_float;
-	double type_double;
+	struct Node *node;
 
 #line 90 "syntax.tab.h" /* yacc.c:1909  */
 };

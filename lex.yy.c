@@ -381,8 +381,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 29
-#define YY_END_OF_BUFFER 30
+#define YY_NUM_RULES 30
+#define YY_END_OF_BUFFER 31
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -392,10 +392,10 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[69] =
     {   0,
-        0,    0,   30,   28,    1,   20,   27,   28,    3,    4,
+        0,    0,   31,   29,    1,   20,   27,   29,    3,    4,
        23,   21,   15,   22,   28,   24,   18,   18,   14,   16,
        19,   19,    5,    6,   19,   19,   19,   19,   19,   19,
-        7,   28,    8,   25,   17,    0,   17,    0,   18,   19,
+        7,   29,    8,   25,   17,    0,   17,    0,   18,   19,
         0,   17,   19,   19,   11,   19,   19,   19,   19,   26,
        17,   19,   19,    2,   19,   19,   19,   12,   19,   19,
        19,   19,   19,   19,   13,   10,    9,    0
@@ -506,10 +506,10 @@ static yyconst flex_int16_t yy_chk[160] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[30] =
+static yyconst flex_int32_t yy_rule_can_match_eol[31] =
     {   0,
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -955,14 +955,19 @@ YY_RULE_SETUP
 case 28:
 YY_RULE_SETUP
 #line 72 "lexical.l"
-{printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
+{return DOT;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 74 "lexical.l"
+#line 73 "lexical.l"
+{printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
+	YY_BREAK
+case 30:
+YY_RULE_SETUP
+#line 75 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 966 "lex.yy.c"
+#line 971 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1972,7 +1977,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 74 "lexical.l"
+#line 75 "lexical.l"
 
 
 

@@ -34,7 +34,7 @@ void addNode(struct Node* root,struct Node* child)
 	root->children[root->childNum] = child;
 	root->childNum++;
 }
-struct node* createNode(int line,char* detail,char* name)
+struct Node* createNode(int line,char* detail,char* name)
 {
 	struct Node* node = malloc(sizeof(struct Node));
 	node->childNum=0;

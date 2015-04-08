@@ -8,8 +8,8 @@ struct Node{
 	int type_int;
 	float type_float;
 	int childNum;
-	struct node* children[15];
+	struct Node* children[15];
 };
 void printTree(struct Node* root);
 void addNode(struct Node* root,struct Node* child);
-struct node* createNode(int line,char* detail,char* name);
+struct Node* createNode(int line,char* detail,char* name);

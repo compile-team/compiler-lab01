@@ -69,7 +69,7 @@ WHILE while
 "&&" {return AND;}
 "||" {return OR;}
 "!" {return NOT;}
-/*"." {return DOT;}*/
+"." {return DOT;}
 . {printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
 
 %% 

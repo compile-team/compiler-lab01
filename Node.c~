@@ -1,11 +1,11 @@
 #include "Node.h"
-int spaceNum;
+int numOfSpace;
 void printNode(struct Node* node)
 {
 	int i;
 	if(strcmp(node->type_name,"")==0)
 		return ;
-	for(i = 0;i < spaceNum;i++)
+	for(i = 0;i < numOfSpace;i++)
 		printf("  ");
 	if (strcmp(node->type_name,"INT") == 0)
 		printf("INT: %d\n",node->type_int);
@@ -23,11 +23,11 @@ void printNode(struct Node* node)
 void printTree(struct Node* root)
 {
 	printNode(root);
-	spaceNum ++;
+	numOfSpace ++;
 	int i;
 	for(i = 0;i < root->childNum;i ++)
 		printTree(root->children[i]);
-	spaceNum --;
+	numOfSpace --;
 }
 void addNode(struct Node* root,struct Node* child)
 {

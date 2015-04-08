@@ -1,31 +1,39 @@
 %{
 #include <stdio.h>	
+#include "Node.c"
 //#define YYSTYPE int
 %}
 
 /*declared types*/
 %union {
-	int type_int;
-	float type_float;
-	double type_double;
+	struct Node *node;
 }
 
 /*declared tokens*/
-%token <type_int> INT
-%token <type_float> FLOAT
-%token ID
-%token TYPE
-%token ADD SUB MUL DIV AND OR NOT
-%token LP RP LB RB LC RC
-%token SEMI COMMA STRUCT RETURN IF ELSE WHILE ASSIGNOP DOT
+%token <node> INT
+%token <node> FLOAT
+%token <node> ID
+%token <node> TYPE
+%token <node> ADD SUB MUL DIV AND OR NOT RELOP
+%token <node> LP RP LB RB LC RC
+%token <node> SEMI COMMA STRUCT RETURN IF ELSE WHILE ASSIGNOP DOT
 /*declare non_terminals*/
-%type <type_float> Exp Factor Term
+%type <node> Exp
+%type <node> Program ExtDefList ExtDef ExtDecList Specifier StructSpecifier OptTag Tag VarDec FunDec VarList ParamDec CompSt StmtList
+%type <node> Stmt DefList Def DecList Dec
 //%token IF ELSE
 /*character behind is higher than fronter in level*/
-%right ASSIGN
-%left ADD SUB
-%left MUL DIV
 %left LP RP
+%left LB RB
+%left DOT 
+/*  %right SUB             ?????????????*/
+%right NOT
+%left MUL DIV
+%left ADD SUB 
+%left RELOP
+%left AND
+%left OR
+%right ASSIGN
 
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
@@ -34,13 +42,13 @@
 
 Program : ExtDefList
 		;
-ExtDefList : ExtDef ExtDefList
-		   | /* empty */
+ExtDefList : /*empty*/
+		   | ExtDef ExtDefList
 		   ;
 ExtDef : Specifier ExtDecList SEMI
 	   | Specifier SEMI
 	   | Specifier FunDec CompSt
-	   | error SEMI
+	   //| error SEMI
 	   ;
 ExtDecList : VarDec
 		   | VarDec COMMA ExtDecList
@@ -56,12 +64,9 @@ OptTag : ID
 	   ;
 Tag : ID
 	;
-VarDec : ID
-	   | VarDec LB INT RB
-	   ;
 FunDec : ID LP VarList RP
        | ID LP RP
-       | error RP
+      //| error RP
        ;
 VarList : ParamDec COMMA VarList
         | ParamDec
@@ -69,7 +74,7 @@ VarList : ParamDec COMMA VarList
 ParamDec : Specifier VarDec
 		 ;
 CompSt : LC DefList StmtList RC
-       | error RC
+       //| error RC
        ;
 StmtList : Stmt StmtList
 		 | /* empty */
@@ -77,16 +82,16 @@ StmtList : Stmt StmtList
 Stmt : Exp SEMI
      | CompSt
      | RETURN Exp SEMI
-     | IF LP Exp RP Stmt
+     | IF LP Exp RP Stmt %prec LOWER_THAN_ELSE
      | IF LP Exp RP Stmt ELSE Stmt
      | WHILE LP Exp RP Stmt
-     | error SEMI
+    // | error SEMI
      ;
 DefList: Def DefList
 	   | /* empty */
 	   ;
 Def : Specifier DecList SEMI
-	| error SEMI
+	//| error SEMI
     ;
 DecList : Dec
         | Dec COMMA DecList
@@ -94,6 +99,9 @@ DecList : Dec
 Dec : VarDec
     | VarDec ASSIGNOP Exp
     ;
+VarDec : ID
+	   | VarDec LB INT RB
+	   ;
 Exp : Exp ASSIGNOP Exp
     | Exp AND Exp
     | Exp OR Exp
@@ -108,11 +116,11 @@ Exp : Exp ASSIGNOP Exp
     | ID LP Args RP
     | ID LP RP
     | Exp LB Exp RB
-  //  | Exp DOT ID
+    | Exp DOT ID
     | ID
     | INT
     | FLOAT
-    | LP error RP
+    //| LP error RP
     ;
 Args : Exp COMMA Args
 	 | Exp
