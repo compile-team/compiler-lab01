@@ -68,13 +68,27 @@ WHILE while
 "struct" 	{	yylval.n = createNode(line,yytext,"STRUCT");
 			return STRUCT;
 		}
-"return" 	{return RETURN;}
-"if" 	{return IF;}
-"else" 	{return ELSE;}
-"while" 	{return WHILE;}
-";" 		{return SEMI;}
-"," 		{return COMMA;}
-"=" 		{return ASSIGNOP;}
+"return" 	{	yylval.n = createNode(line,yytext,"RETURN");
+			return RETURN;
+		}
+"if" 	{	yylval.n = createNode(line,yytext,"IF");
+			return IF;
+		}
+"else" 	{	yylval.n = createNode(line,yytext,"ELSE");
+			return ELSE;
+		}
+"while" 	{	yylval.n = createNode(line,yytext,"WHILE");
+			return WHILE;
+		}
+";" 		{	yylval.n = createNode(line,yytext,"SEMI");
+			return SEMI;
+		}
+"," 		{	yylval.n = createNode(line,yytext,"COMMA");
+			return COMMA;
+		}
+"=" 		{	yylval.n = createNode(line,yytext,"ASSIGNOP");
+			return ASSIGNOP;
+		}
 {FLOAT} 	{	printf("float at line %d at %s\n",line,yytext); 
 			yylval.n = createNode(line,yytext,"FLOAT");
 			sscanf(yytext, "%f", &(yylval.n->type_float));
