@@ -6,7 +6,7 @@
 #include "syntax.tab.h"
 	int line=1;
 	int yycolumn = 1;
-	#define YY_USER_ACTION
+	#define YY_USER_ACTION \
 	 yylloc.first_line = yylloc.last_line = line;\
 	 yylloc.first_column = yycolumn;\
 	 yylloc.last_column = yycolumn + yyleng - 1;\
@@ -51,6 +51,10 @@ WHILE while
 					yylval.node = (struct Node *)createNode(line,yytext,"TYPE"); 
 					return TYPE;
 				}
+{RELOP}	{
+			yylval.node = (sturct Node *)createNode(line,yytext,"RELOP");
+			return RELOP;
+		}
 "(" 	{	yylval.node = (struct Node *)createNode(line,yytext,"LP");
 			return LP;
 		}
@@ -129,6 +133,10 @@ WHILE while
 "!" 	{	yylval.node = (struct Node *)createNode(line,yytext,"NOT");
 			return NOT;
 		}
+"."     {
+			yylval.node = (struct Node *)createNode(line,yytext,"DOT");
+			return DOT;
+		}
 . {printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
 
 %% 
@@ -145,6 +153,8 @@ int main(int argc,char** argv){
 	//scanf("%s",s);
 	yyrestart(f);
 	yyparse();
+	if(has_error == 0)
+		printTree(root);
 	//while(yylex()!=0) ;
 	return 0;
 }

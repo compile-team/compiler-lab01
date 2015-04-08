@@ -1,8 +1,13 @@
+struct Complex
+{
+ float real,image;
+};
 int main()
 {
-int a;
-int b = 3;
-float c = 3;
+float a[10][3];
+int i;
+a[5][3] = 1.5;
+if(a[1][2] == 0) i = 1 else i = 0;
 }
 
 

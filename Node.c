@@ -23,14 +23,14 @@ void printNode(struct Node* node)
 		return ;
 	for(i = 0;i < numOfSpace;i++)
 		printf("  ");
-	if (strcmp(node->type_name,"INT") == 0)
-		printf("INT: %d\n",node->type_int);
+	if (strcmp(node->type_name,"TYPE") == 0)
+		printf("TYPE : %s\n",node->type_detail);
+	else if (strcmp(node->type_name,"INT") == 0)
+		printf("INT : %d\n",node->type_int);
 	else if (strcmp(node->type_name,"FLOAT") == 0)
-		printf("FLOAT: %f\n",node->type_float);
+		printf("FLOAT : %f\n",node->type_float);
 	else if (strcmp(node->type_name,"ID") == 0)
-		printf("ID: %s\n",node->type_detail);
-	else if (strcmp(node->type_name,"TYPE") == 0)
-		printf("TYPE: %s\n",node->type_detail);
+		printf("ID : %s\n",node->type_detail);
 	else if (node->childNum==0)
 		printf("%s\n",node->type_name);	
 	else
