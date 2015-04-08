@@ -1,5 +1,21 @@
 #include "Node.h"
 int numOfSpace;
+struct node* createNode(int line,char* detail,char* name)
+{
+	struct Node* node = malloc(sizeof(struct Node));
+	node->childNum=0;
+	node->line=line;
+	if(detail!=NULL)
+		strcpy(node->type_detail,detail);
+	if(name!=NULL)
+		strcpy(node->type_name,name);
+	return node;
+}
+void addNode(struct Node* root,struct Node* child)
+{
+	root->children[root->childNum] = child;
+	root->childNum++;
+}
 void printNode(struct Node* node)
 {
 	int i;
@@ -28,20 +44,4 @@ void printTree(struct Node* root)
 	for(i = 0;i < root->childNum;i ++)
 		printTree(root->children[i]);
 	numOfSpace --;
-}
-void addNode(struct Node* root,struct Node* child)
-{
-	root->children[root->childNum] = child;
-	root->childNum++;
-}
-struct node* createNode(int line,char* detail,char* name)
-{
-	struct Node* node = malloc(sizeof(struct Node));
-	node->childNum=0;
-	node->line=line;
-	if(detail!=NULL)
-		strcpy(node->type_detail,detail);
-	if(name!=NULL)
-		strcpy(node->type_name,name);
-	return node;
 }

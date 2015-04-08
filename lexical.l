@@ -42,53 +42,75 @@ ELSE else
 WHILE while
 %%
 
-" "|"	" {printf("type or character at line %d\n",line);}
-<<<<<<< HEAD
-"int"|float {printf("type at line %d\n",line); return TYPE;}
-"(" {return LP;}
-")" {return RP;}
-"[" {return LB;}
-"]" {return RB;}
-"{" {return LC;}
-"}" {return RC;}
-"struct" {return STRUCT;}
-"return" {return RETURN;}
-"if" {return IF;}
-"else" {return ELSE;}
-"while" {return WHILE;}
-";" {return SEMI;}
-"," {return COMMA;}
-"=" {return ASSIGNOP;}
-{FLOAT} {printf("float at line %d at %s\n",line,yytext); yylval.type_float = atoi(yytext);return FLOAT;}
-{INT} {printf("int at line %d at %s\n",line,yytext);yylval.type_int = atoi(yytext); return INT;}
-=======
-"int"|float {printf("type at line %d\n",line);}
-"(" {/*return LP;*/}
-")" {/*return RP;*/}
-"[" {/*return LB;*/}
-"]" {/*return RB;*/}
-"{" {/*return LC;*/}
-"}" {/*return RC;*/}
-"struct" {/*return STRUCT;*/}
-"return" {/*return RETURN;*/}
-"if" {/*return IF;*/}
-"else" {/*return ELSE;*/}
-"while" {/*return WHILE;*/}
-";" {/*return SEMI;*/}
-"," {/*return COMMA;*/}
-"=" {/*return ASSIGNOP;*/}
-{FLOAT} {printf("float at line %d at %s\n",line,yytext); /*return FLOAT;*/yylval.type_float = atoi(yytext); return FLOAT;}
-{INT} {printf("int at line %d at %s\n",line,yytext); yylval.type_int = atoi(yytext); return INT;}
->>>>>>> dc922aa0818a394aaa1ef74619440af31f28b23b
-{ID} {printf("id at line %d\n",line); /*yylval = atoi(yytext); return ID;*/}
-\n {line++;/* yycolumn = 1;*/}
-"+" {return ADD;}
-"-" {return SUB;}
-"*" {return MUL;}
-"/" {return DIV;}
-"&&" {return AND;}
-"||" {return OR;}
-"!" {return NOT;}
+" "|"	" {}
+"int"|"float" 	{	printf("type at line %d\n",line);
+				yylval.n = createNode(line,yytext,"TYPE"); 
+				return TYPE;
+			}
+"(" 		{	yylval.n = createNode(line,yytext,"LP");
+			return LP;
+		}
+")" 		{	yylval.n = createNode(line,yytext,"RP");
+			return RP;
+		}
+"[" 		{	yylval.n = createNode(line,yytext,"LB");
+			return LB;
+		}
+"]" 		{	yylval.n = createNode(line,yytext,"RB");
+			return RB;
+		}
+"{" 		{	yylval.n = createNode(line,yytext,"LC");
+			return LC;
+		}
+"}" 		{	yylval.n = createNode(line,yytext,"RC");
+			return RC;
+		}
+"struct" 	{	yylval.n = createNode(line,yytext,"STRUCT");
+			return STRUCT;
+		}
+"return" 	{return RETURN;}
+"if" 	{return IF;}
+"else" 	{return ELSE;}
+"while" 	{return WHILE;}
+";" 		{return SEMI;}
+"," 		{return COMMA;}
+"=" 		{return ASSIGNOP;}
+{FLOAT} 	{	printf("float at line %d at %s\n",line,yytext); 
+			yylval.n = createNode(line,yytext,"FLOAT");
+			sscanf(yytext, "%f", &(yylval.n->type_float));
+			return FLOAT;
+		}
+{INT} 	{	printf("int at line %d at %s\n",line,yytext);
+			yylval.n = createNode(line,yytext,"INT");
+			yylval.n->type_int = atoi(yytext); 
+			return INT;
+		}
+{ID} 	{	printf("id at line %d\n",line); 
+			yylval.n = createNode(line,yytext,"ID");
+			return ID;
+		}
+\n 		{	line++;/* yycolumn = 1;*/}
+"+" 		{	yylval.n = createNode(line,yytext,"ADD");
+			return ADD;
+		}
+"-" 		{	yylval.n = createNode(line,yytext,"SUB");
+			return SUB;
+		}
+"*" 		{	yylval.n = createNode(line,yytext,"MUL");
+			return MUL;
+		}
+"/" 		{	yylval.n = createNode(line,yytext,"DIV");
+			return DIV;
+		}
+"&&" 	{	yylval.n = createNode(line,yytext,"AND");
+			return AND;
+		}
+"||" 	{	yylval.n = createNode(line,yytext,"OR");
+			return OR;
+		}
+"!" 		{	yylval.n = createNode(line,yytext,"NOT");
+			return NOT;
+		}
 . {printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
 
 %% 
