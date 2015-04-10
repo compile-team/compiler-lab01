@@ -1,0 +1,13 @@
+文件结构： 
+	/lab
+		/Code
+			lexical.l
+			syntax.y
+		
+		/Test
+			test1.cmm
+			test2.cmm
+			
+		/report.pdf
+		/parser
+		/README

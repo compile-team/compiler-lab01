@@ -1,0 +1,19 @@
+文件结构： 
+	/lab
+		/Code
+			lexical.l
+			syntax.y
+		
+		/Test
+			test1.cmm
+			test2.cmm
+			
+		/report.pdf
+		/parser
+		/README
+
+注意：请使用bison -d syntax.y
+			flex lexical.l
+			gcc syntax.tab.c -lfl -ly -o parser
+		编译
+		

@@ -2,8 +2,10 @@
 #include <stdio.h>	
 #include "Node.c"
 //#define YYSTYPE int
+#define YYERROR_VERBOSE 1
 struct Node *root;
 int has_error = 0;
+int which_error;
 %}
 
 /*declared types*/
@@ -25,20 +27,20 @@ int has_error = 0;
 %type <node> Stmt DefList Def DecList Dec
 //%token IF ELSE
 /*character behind is higher than fronter in level*/
-%left LP RP
-%left LB RB
-%left DOT 
-/*  %right SUB             ?????????????*/
-%right NOT
-%left MUL DIV
-%left ADD SUB 
-%left RELOP
-%left AND
-%left OR
-%right ASSIGN
-
 %nonassoc LOWER_THAN_ELSE
 %nonassoc ELSE
+
+%right ASSIGNOP
+%left OR
+%left AND
+%left RELOP
+%left ADD SUB 
+%left MUL DIV
+%right NOT
+/*  %right SUB             ?????????????*/
+%left DOT 
+%left LB RB
+%left LP RP
 
 %%
 
@@ -49,8 +51,7 @@ Program : ExtDefList	{
 		   				}
 		;
 ExtDefList : /*empty*/	{
-		   					//$$ = NULL;
-		   					$$ = createNode(@$.first_line,NULL,NULL);
+		   					$$ = NULL;
 		   				}
 		   | ExtDef ExtDefList	{
 		   							$$ = createNode(@1.first_line,NULL,"ExtDefList");
@@ -122,8 +123,7 @@ OptTag : ID		{
 					addNode($$,$1);
 				}
 	   | /* empty */	{
-		   					//$$ = NULL;
-		   					$$ = createNode(@$.first_line,NULL,NULL);
+		   					$$ = NULL;
 		   				}
 	   ;
 Tag : ID		{
@@ -184,8 +184,7 @@ StmtList : Stmt StmtList	{
 								addNode($$,$2);
    							}
 		 | /* empty */	{
-		 					//$$ = NULL;
-		 					$$ = createNode(@$.first_line,NULL,NULL);
+		 					$$ = NULL;
 		 				}
 		 ;
 Stmt : Exp SEMI	{
@@ -229,6 +228,12 @@ Stmt : Exp SEMI	{
 								addNode($$,$4);
 								addNode($$,$5);
    							}
+   	/* | ID {
+   	 				$$ = createNode(@1.first_line,NULL,"Stmt");
+					addNode($$,$1);
+					//which_error = 1;//ignore semi
+					yyerror("missing \";\"");
+ 				 }*/
      | error SEMI	{
 						$$ = createNode(@$.first_line,NULL,"Stmt");
 						yyerrok;
@@ -240,8 +245,7 @@ DefList: Def DefList	{
 							addNode($$,$2);
 						}
 	   | /* empty */	{
-	   						//$$ = NULL;
-	   						$$ = createNode(@$.first_line,NULL,NULL);
+	   						$$ = NULL;
 	   					}
 	   ;
 Def : Specifier DecList SEMI	{
@@ -250,10 +254,10 @@ Def : Specifier DecList SEMI	{
 									addNode($$,$2);
 									addNode($$,$3);
 	   							}
-	| error SEMI	{
+	/*| error SEMI	{
 						$$ = createNode(@$.first_line,NULL,"Def");
 						yyerrok;
-					}
+					}*/
     ;
 DecList : Dec	{
 					$$ = createNode(@1.first_line,NULL,"DecList");
@@ -288,118 +292,120 @@ VarDec : ID	{
 								addNode($$,$3);
 								addNode($$,$4);
 							}
-	  | error RB {
+	  | LB error RB {
+	  				//which_error = 2;
 					$$ = createNode(@$.first_line,NULL,"Def");
 					yyerrok;
+					
 				 }
 	   ;
 Exp : Exp ASSIGNOP Exp	{
-							$$ = createNode(@1.first_line,NULL,"Expression");
+							$$ = createNode(@1.first_line,NULL,"Exp");
 							addNode($$,$1);
 							addNode($$,$2);
 							addNode($$,$3);
 						}
     | Exp AND Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp OR Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp RELOP Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp ADD Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp SUB Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp MUL Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp DIV Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | LP Exp RP	{
-					$$ = createNode(@1.first_line,NULL,"Expression");
+					$$ = createNode(@1.first_line,NULL,"Exp");
 					addNode($$,$1);
 					addNode($$,$2);
 					addNode($$,$3);
 				}
     | SUB Exp	{
-										$$ = createNode(@1.first_line,NULL,"Expression");
+										$$ = createNode(@1.first_line,NULL,"Exp");
 										addNode($$,$1);
 										addNode($$,$2);
 									}
     | NOT Exp	{
-					$$ = createNode(@1.first_line,NULL,"Expression");
+					$$ = createNode(@1.first_line,NULL,"Exp");
 					addNode($$,$1);
 					addNode($$,$2);
 				}
     | ID LP Args RP	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 						addNode($$,$4);
 					}
     | ID LP RP	{
-					$$ = createNode(@1.first_line,NULL,"Expression");
+					$$ = createNode(@1.first_line,NULL,"Exp");
 					addNode($$,$1);
 					addNode($$,$2);
 					addNode($$,$3);
 				}
     | Exp LB Exp RB	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 						addNode($$,$4);
 					}
     | Exp DOT ID	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | ID	{
-				$$ = createNode(@1.first_line,NULL,"Expression");
+				$$ = createNode(@1.first_line,NULL,"Exp");
 				addNode($$,$1);
 			}
     | INT	{
-				$$ = createNode(@1.first_line,NULL,"Expression");
+				$$ = createNode(@1.first_line,NULL,"Exp");
 				addNode($$,$1);
 			}
     | FLOAT	{
-				$$ = createNode(@1.first_line,NULL,"Expression");
+				$$ = createNode(@1.first_line,NULL,"Exp");
 				addNode($$,$1);
 			}
-    | error RP 	{
+    | LP error RP 	{
 					$$ = createNode(@$.first_line,NULL,"Def");
 					yyerrok;
 				}
-	| error RB	{
+	| LB error RB	{
 					$$ = createNode(@$.first_line,NULL,"Def");
 					yyerrok;
 				}
@@ -419,6 +425,11 @@ Args : Exp COMMA Args	{
 #include "lex.yy.c"
 yyerror(char *msg){
 	has_error = 1;
-	fprintf(stderr,"Error type B at line %d: %s\n",line,yytext);
+	//if(which_error == 1)
+		//fprintf(stderr,"Error type B at line %d: Missing \";\"",line);
+	//else if(which_error == 2)
+		//fprintf(stderr,"Error type B at line %d: Missing \"]\"",line);
+	//else
+	 fprintf(stderr,"Error type B at line %d: %s\n",line,msg);
 	//yyerrok;
 }

@@ -834,7 +834,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 50 "lexical.l"
-{	printf("type at line %d\n",line);
+{	//printf("type at line %d\n",line);
 					yylval.node = (struct Node *)createNode(line,yytext,"TYPE"); 
 					return TYPE;
 				}
@@ -843,77 +843,77 @@ case 3:
 YY_RULE_SETUP
 #line 54 "lexical.l"
 {
-			yylval.node = (struct Node *)createNode(line,yytext,"RELOP");
+			yylval.node = (struct Node *)createNode(line,NULL,"RELOP");
 			return RELOP;
 		}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
 #line 58 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"LP");
+{	yylval.node = (struct Node *)createNode(line,NULL,"LP");
 			return LP;
 		}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 61 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"RP");
+{	yylval.node = (struct Node *)createNode(line,NULL,"RP");
 			return RP;
 		}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 64 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"LB");
+{	yylval.node = (struct Node *)createNode(line,NULL,"LB");
 			return LB;
 		}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 67 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"RB");
+{	yylval.node = (struct Node *)createNode(line,NULL,"RB");
 			return RB;
 		}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 70 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"LC");
+{	yylval.node = (struct Node *)createNode(line,NULL,"LC");
 			return LC;
 		}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 73 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"RC");
+{	yylval.node = (struct Node *)createNode(line,NULL,"RC");
 			return RC;
 		}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 76 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"STRUCT");
+{	yylval.node = (struct Node *)createNode(line,NULL,"STRUCT");
 			return STRUCT;
 		 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 79 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"RETURN");
+{	yylval.node = (struct Node *)createNode(line,NULL,"RETURN");
 			return RETURN;
 		 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 82 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"IF");
+{	yylval.node = (struct Node *)createNode(line,NULL,"IF");
 			return IF;
 		}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
 #line 85 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"ELSE");
+{	yylval.node = (struct Node *)createNode(line,NULL,"ELSE");
 			return ELSE;
 		}
 	YY_BREAK
@@ -934,21 +934,21 @@ YY_RULE_SETUP
 case 16:
 YY_RULE_SETUP
 #line 94 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"COMMA");
+{	yylval.node = (struct Node *)createNode(line,NULL,"COMMA");
 			return COMMA;
 		}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 97 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"ASSIGNOP");
+{	yylval.node = (struct Node *)createNode(line,NULL,"ASSIGNOP");
 			return ASSIGNOP;
 		}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
 #line 100 "lexical.l"
-{	printf("float at line %d at %s\n",line,yytext); 
+{	//printf("float at line %d at %s\n",line,yytext); 
 			yylval.node = (struct Node *)createNode(line,yytext,"FLOAT");
 			sscanf(yytext, "%f", &(yylval.node->type_float));
 			return FLOAT;
@@ -957,7 +957,7 @@ YY_RULE_SETUP
 case 19:
 YY_RULE_SETUP
 #line 105 "lexical.l"
-{	printf("int at line %d at %s\n",line,yytext);
+{	//printf("int at line %d at %s\n",line,yytext);
 			yylval.node = (struct Node *)createNode(line,yytext,"INT");
 			yylval.node->type_int = atoi(yytext); 
 			return INT;
@@ -966,7 +966,7 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 110 "lexical.l"
-{	printf("id at line %d\n",line); 
+{	//printf("id at line %d\n",line); 
 			yylval.node = (struct Node *)createNode(line,yytext,"ID");
 			return ID;
 		}
@@ -987,42 +987,42 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 118 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"SUB");
+{	yylval.node = (struct Node *)createNode(line,NULL,"SUB");
 			return SUB;
 		}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 121 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"MUL");
+{	yylval.node = (struct Node *)createNode(line,NULL,"MUL");
 			return MUL;
 		}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 124 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"DIV");
+{	yylval.node = (struct Node *)createNode(line,NULL,"DIV");
 			return DIV;
 		}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 127 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"AND");
+{	yylval.node = (struct Node *)createNode(line,NULL,"AND");
 			return AND;
 		}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 130 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"OR");
+{	yylval.node = (struct Node *)createNode(line,NULL,"OR");
 			return OR;
 		}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 133 "lexical.l"
-{	yylval.node = (struct Node *)createNode(line,yytext,"NOT");
+{	yylval.node = (struct Node *)createNode(line,NULL,"NOT");
 			return NOT;
 		}
 	YY_BREAK
@@ -1030,21 +1030,24 @@ case 29:
 YY_RULE_SETUP
 #line 136 "lexical.l"
 {
-			yylval.node = (struct Node *)createNode(line,yytext,"DOT");
+			yylval.node = (struct Node *)createNode(line,NULL,"DOT");
 			return DOT;
 		}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 140 "lexical.l"
-{printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
+{
+		printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);
+		has_error = 1;
+	}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 142 "lexical.l"
+#line 145 "lexical.l"
 ECHO;
 	YY_BREAK
-#line 1048 "lex.yy.c"
+#line 1051 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2054,7 +2057,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 142 "lexical.l"
+#line 145 "lexical.l"
 
 
 

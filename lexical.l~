@@ -47,12 +47,12 @@ ELSE else
 WHILE while
 %%
 " "|"	" {}
-"int"|"float" 	{	printf("type at line %d\n",line);
+"int"|"float" 	{	//printf("type at line %d\n",line);
 					yylval.node = (struct Node *)createNode(line,yytext,"TYPE"); 
 					return TYPE;
 				}
 {RELOP}	{
-			yylval.node = (sturct Node *)createNode(line,yytext,"RELOP");
+			yylval.node = (struct Node *)createNode(line,yytext,"RELOP");
 			return RELOP;
 		}
 "(" 	{	yylval.node = (struct Node *)createNode(line,yytext,"LP");
@@ -97,17 +97,17 @@ WHILE while
 "=" 	{	yylval.node = (struct Node *)createNode(line,yytext,"ASSIGNOP");
 			return ASSIGNOP;
 		}
-{FLOAT} {	printf("float at line %d at %s\n",line,yytext); 
+{FLOAT} {	//printf("float at line %d at %s\n",line,yytext); 
 			yylval.node = (struct Node *)createNode(line,yytext,"FLOAT");
 			sscanf(yytext, "%f", &(yylval.node->type_float));
 			return FLOAT;
 		}
-{INT} 	{	printf("int at line %d at %s\n",line,yytext);
+{INT} 	{	//printf("int at line %d at %s\n",line,yytext);
 			yylval.node = (struct Node *)createNode(line,yytext,"INT");
 			yylval.node->type_int = atoi(yytext); 
 			return INT;
 		}
-{ID} 	{	printf("id at line %d\n",line); 
+{ID} 	{	//printf("id at line %d\n",line); 
 			yylval.node = (struct Node *)createNode(line,yytext,"ID");
 			return ID;
 		}
@@ -137,7 +137,10 @@ WHILE while
 			yylval.node = (struct Node *)createNode(line,yytext,"DOT");
 			return DOT;
 		}
-. {printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
+. 	{
+		printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);
+		has_error = 1;
+	}
 
 %% 
 

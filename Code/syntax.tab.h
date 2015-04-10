@@ -72,8 +72,7 @@ extern int yydebug;
     WHILE = 282,
     ASSIGNOP = 283,
     DOT = 284,
-    ASSIGN = 285,
-    LOWER_THAN_ELSE = 286
+    LOWER_THAN_ELSE = 285
   };
 #endif
 
@@ -82,11 +81,11 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 10 "syntax.y" /* yacc.c:1909  */
+#line 12 "syntax.y" /* yacc.c:1909  */
 
 	struct Node *node;
 
-#line 90 "syntax.tab.h" /* yacc.c:1909  */
+#line 89 "syntax.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

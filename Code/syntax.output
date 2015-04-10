@@ -1,0 +1,1728 @@
+语法
+
+    0 $accept: Program $end
+
+    1 Program: ExtDefList
+
+    2 ExtDefList: %empty
+    3           | ExtDef ExtDefList
+
+    4 ExtDef: Specifier ExtDecList SEMI
+    5       | Specifier SEMI
+    6       | Specifier FunDec CompSt
+    7       | error SEMI
+
+    8 ExtDecList: VarDec
+    9           | VarDec COMMA ExtDecList
+
+   10 Specifier: TYPE
+   11          | StructSpecifier
+
+   12 StructSpecifier: STRUCT OptTag LC DefList RC
+   13                | STRUCT Tag
+
+   14 OptTag: ID
+   15       | %empty
+
+   16 Tag: ID
+
+   17 FunDec: ID LP VarList RP
+   18       | ID LP RP
+   19       | error RP
+
+   20 VarList: ParamDec COMMA VarList
+   21        | ParamDec
+
+   22 ParamDec: Specifier VarDec
+
+   23 CompSt: LC DefList StmtList RC
+
+   24 StmtList: Stmt StmtList
+   25         | %empty
+
+   26 Stmt: Exp SEMI
+   27     | CompSt
+   28     | RETURN Exp SEMI
+   29     | IF LP Exp RP Stmt
+   30     | IF LP Exp RP Stmt ELSE Stmt
+   31     | WHILE LP Exp RP Stmt
+   32     | error SEMI
+
+   33 DefList: Def DefList
+   34        | %empty
+
+   35 Def: Specifier DecList SEMI
+
+   36 DecList: Dec
+   37        | Dec COMMA DecList
+
+   38 Dec: VarDec
+   39    | VarDec ASSIGNOP Exp
+
+   40 VarDec: ID
+   41       | VarDec LB INT RB
+   42       | LB error RB
+
+   43 Exp: Exp ASSIGNOP Exp
+   44    | Exp AND Exp
+   45    | Exp OR Exp
+   46    | Exp RELOP Exp
+   47    | Exp ADD Exp
+   48    | Exp SUB Exp
+   49    | Exp MUL Exp
+   50    | Exp DIV Exp
+   51    | LP Exp RP
+   52    | SUB Exp
+   53    | NOT Exp
+   54    | ID LP Args RP
+   55    | ID LP RP
+   56    | Exp LB Exp RB
+   57    | Exp DOT ID
+   58    | ID
+   59    | INT
+   60    | FLOAT
+   61    | LP error RP
+   62    | LB error RB
+
+   63 Args: Exp COMMA Args
+   64     | Exp
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256) 7 19 32 42 61 62
+INT (258) 41 59
+FLOAT (259) 60
+ID (260) 14 16 17 18 40 54 55 57 58
+TYPE (261) 10
+ADD (262) 47
+SUB (263) 48 52
+MUL (264) 49
+DIV (265) 50
+AND (266) 44
+OR (267) 45
+NOT (268) 53
+RELOP (269) 46
+LP (270) 17 18 29 30 31 51 54 55 61
+RP (271) 17 18 19 29 30 31 51 54 55 61
+LB (272) 41 42 56 62
+RB (273) 41 42 56 62
+LC (274) 12 23
+RC (275) 12 23
+SEMI (276) 4 5 7 26 28 32 35
+COMMA (277) 9 20 37 63
+STRUCT (278) 12 13
+RETURN (279) 28
+IF (280) 29 30
+ELSE (281) 30
+WHILE (282) 31
+ASSIGNOP (283) 39 43
+DOT (284) 57
+LOWER_THAN_ELSE (285)
+
+
+Nonterminals, with rules where they appear
+
+$accept (31)
+    左： 0
+Program (32)
+    左： 1, 右： 0
+ExtDefList (33)
+    左： 2 3, 右： 1 3
+ExtDef (34)
+    左： 4 5 6 7, 右： 3
+ExtDecList (35)
+    左： 8 9, 右： 4 9
+Specifier (36)
+    左： 10 11, 右： 4 5 6 22 35
+StructSpecifier (37)
+    左： 12 13, 右： 11
+OptTag (38)
+    左： 14 15, 右： 12
+Tag (39)
+    左： 16, 右： 13
+FunDec (40)
+    左： 17 18 19, 右： 6
+VarList (41)
+    左： 20 21, 右： 17 20
+ParamDec (42)
+    左： 22, 右： 20 21
+CompSt (43)
+    左： 23, 右： 6 27
+StmtList (44)
+    左： 24 25, 右： 23 24
+Stmt (45)
+    左： 26 27 28 29 30 31 32, 右： 24 29 30 31
+DefList (46)
+    左： 33 34, 右： 12 23 33
+Def (47)
+    左： 35, 右： 33
+DecList (48)
+    左： 36 37, 右： 35 37
+Dec (49)
+    左： 38 39, 右： 36 37
+VarDec (50)
+    左： 40 41 42, 右： 8 9 22 38 39 41
+Exp (51)
+    左： 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61
+    62, 右： 26 28 29 30 31 39 43 44 45 46 47 48 49 50 51 52 53 56
+    57 63 64
+Args (52)
+    左： 63 64, 右： 54 63
+
+
+State 0
+
+    0 $accept: . Program $end
+
+    error   shift, and go to state 1
+    TYPE    shift, and go to state 2
+    STRUCT  shift, and go to state 3
+
+    $end  reduce using rule 2 (ExtDefList)
+
+    Program          转到状态4
+    ExtDefList       转到状态5
+    ExtDef           转到状态6
+    Specifier        转到状态7
+    StructSpecifier  转到状态8
+
+
+State 1
+
+    7 ExtDef: error . SEMI
+
+    SEMI  shift, and go to state 9
+
+
+State 2
+
+   10 Specifier: TYPE .
+
+    $default  reduce using rule 10 (Specifier)
+
+
+State 3
+
+   12 StructSpecifier: STRUCT . OptTag LC DefList RC
+   13                | STRUCT . Tag
+
+    ID  shift, and go to state 10
+
+    $default  reduce using rule 15 (OptTag)
+
+    OptTag  转到状态11
+    Tag     转到状态12
+
+
+State 4
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 13
+
+
+State 5
+
+    1 Program: ExtDefList .
+
+    $default  reduce using rule 1 (Program)
+
+
+State 6
+
+    3 ExtDefList: ExtDef . ExtDefList
+
+    error   shift, and go to state 1
+    TYPE    shift, and go to state 2
+    STRUCT  shift, and go to state 3
+
+    $end  reduce using rule 2 (ExtDefList)
+
+    ExtDefList       转到状态14
+    ExtDef           转到状态6
+    Specifier        转到状态7
+    StructSpecifier  转到状态8
+
+
+State 7
+
+    4 ExtDef: Specifier . ExtDecList SEMI
+    5       | Specifier . SEMI
+    6       | Specifier . FunDec CompSt
+
+    error  shift, and go to state 15
+    ID     shift, and go to state 16
+    LB     shift, and go to state 17
+    SEMI   shift, and go to state 18
+
+    ExtDecList  转到状态19
+    FunDec      转到状态20
+    VarDec      转到状态21
+
+
+State 8
+
+   11 Specifier: StructSpecifier .
+
+    $default  reduce using rule 11 (Specifier)
+
+
+State 9
+
+    7 ExtDef: error SEMI .
+
+    $default  reduce using rule 7 (ExtDef)
+
+
+State 10
+
+   14 OptTag: ID .
+   16 Tag: ID .
+
+    LC        reduce using rule 14 (OptTag)
+    $default  reduce using rule 16 (Tag)
+
+
+State 11
+
+   12 StructSpecifier: STRUCT OptTag . LC DefList RC
+
+    LC  shift, and go to state 22
+
+
+State 12
+
+   13 StructSpecifier: STRUCT Tag .
+
+    $default  reduce using rule 13 (StructSpecifier)
+
+
+State 13
+
+    0 $accept: Program $end .
+
+    $default  接受
+
+
+State 14
+
+    3 ExtDefList: ExtDef ExtDefList .
+
+    $default  reduce using rule 3 (ExtDefList)
+
+
+State 15
+
+   19 FunDec: error . RP
+
+    RP  shift, and go to state 23
+
+
+State 16
+
+   17 FunDec: ID . LP VarList RP
+   18       | ID . LP RP
+   40 VarDec: ID .
+
+    LP  shift, and go to state 24
+
+    $default  reduce using rule 40 (VarDec)
+
+
+State 17
+
+   42 VarDec: LB . error RB
+
+    error  shift, and go to state 25
+
+
+State 18
+
+    5 ExtDef: Specifier SEMI .
+
+    $default  reduce using rule 5 (ExtDef)
+
+
+State 19
+
+    4 ExtDef: Specifier ExtDecList . SEMI
+
+    SEMI  shift, and go to state 26
+
+
+State 20
+
+    6 ExtDef: Specifier FunDec . CompSt
+
+    LC  shift, and go to state 27
+
+    CompSt  转到状态28
+
+
+State 21
+
+    8 ExtDecList: VarDec .
+    9           | VarDec . COMMA ExtDecList
+   41 VarDec: VarDec . LB INT RB
+
+    LB     shift, and go to state 29
+    COMMA  shift, and go to state 30
+
+    $default  reduce using rule 8 (ExtDecList)
+
+
+State 22
+
+   12 StructSpecifier: STRUCT OptTag LC . DefList RC
+
+    TYPE    shift, and go to state 2
+    STRUCT  shift, and go to state 3
+
+    $default  reduce using rule 34 (DefList)
+
+    Specifier        转到状态31
+    StructSpecifier  转到状态8
+    DefList          转到状态32
+    Def              转到状态33
+
+
+State 23
+
+   19 FunDec: error RP .
+
+    $default  reduce using rule 19 (FunDec)
+
+
+State 24
+
+   17 FunDec: ID LP . VarList RP
+   18       | ID LP . RP
+
+    TYPE    shift, and go to state 2
+    RP      shift, and go to state 34
+    STRUCT  shift, and go to state 3
+
+    Specifier        转到状态35
+    StructSpecifier  转到状态8
+    VarList          转到状态36
+    ParamDec         转到状态37
+
+
+State 25
+
+   42 VarDec: LB error . RB
+
+    RB  shift, and go to state 38
+
+
+State 26
+
+    4 ExtDef: Specifier ExtDecList SEMI .
+
+    $default  reduce using rule 4 (ExtDef)
+
+
+State 27
+
+   23 CompSt: LC . DefList StmtList RC
+
+    TYPE    shift, and go to state 2
+    STRUCT  shift, and go to state 3
+
+    $default  reduce using rule 34 (DefList)
+
+    Specifier        转到状态31
+    StructSpecifier  转到状态8
+    DefList          转到状态39
+    Def              转到状态33
+
+
+State 28
+
+    6 ExtDef: Specifier FunDec CompSt .
+
+    $default  reduce using rule 6 (ExtDef)
+
+
+State 29
+
+   41 VarDec: VarDec LB . INT RB
+
+    INT  shift, and go to state 40
+
+
+State 30
+
+    9 ExtDecList: VarDec COMMA . ExtDecList
+
+    ID  shift, and go to state 41
+    LB  shift, and go to state 17
+
+    ExtDecList  转到状态42
+    VarDec      转到状态21
+
+
+State 31
+
+   35 Def: Specifier . DecList SEMI
+
+    ID  shift, and go to state 41
+    LB  shift, and go to state 17
+
+    DecList  转到状态43
+    Dec      转到状态44
+    VarDec   转到状态45
+
+
+State 32
+
+   12 StructSpecifier: STRUCT OptTag LC DefList . RC
+
+    RC  shift, and go to state 46
+
+
+State 33
+
+   33 DefList: Def . DefList
+
+    TYPE    shift, and go to state 2
+    STRUCT  shift, and go to state 3
+
+    $default  reduce using rule 34 (DefList)
+
+    Specifier        转到状态31
+    StructSpecifier  转到状态8
+    DefList          转到状态47
+    Def              转到状态33
+
+
+State 34
+
+   18 FunDec: ID LP RP .
+
+    $default  reduce using rule 18 (FunDec)
+
+
+State 35
+
+   22 ParamDec: Specifier . VarDec
+
+    ID  shift, and go to state 41
+    LB  shift, and go to state 17
+
+    VarDec  转到状态48
+
+
+State 36
+
+   17 FunDec: ID LP VarList . RP
+
+    RP  shift, and go to state 49
+
+
+State 37
+
+   20 VarList: ParamDec . COMMA VarList
+   21        | ParamDec .
+
+    COMMA  shift, and go to state 50
+
+    $default  reduce using rule 21 (VarList)
+
+
+State 38
+
+   42 VarDec: LB error RB .
+
+    $default  reduce using rule 42 (VarDec)
+
+
+State 39
+
+   23 CompSt: LC DefList . StmtList RC
+
+    error   shift, and go to state 51
+    INT     shift, and go to state 52
+    FLOAT   shift, and go to state 53
+    ID      shift, and go to state 54
+    SUB     shift, and go to state 55
+    NOT     shift, and go to state 56
+    LP      shift, and go to state 57
+    LB      shift, and go to state 58
+    LC      shift, and go to state 27
+    RETURN  shift, and go to state 59
+    IF      shift, and go to state 60
+    WHILE   shift, and go to state 61
+
+    RC  reduce using rule 25 (StmtList)
+
+    CompSt    转到状态62
+    StmtList  转到状态63
+    Stmt      转到状态64
+    Exp       转到状态65
+
+
+State 40
+
+   41 VarDec: VarDec LB INT . RB
+
+    RB  shift, and go to state 66
+
+
+State 41
+
+   40 VarDec: ID .
+
+    $default  reduce using rule 40 (VarDec)
+
+
+State 42
+
+    9 ExtDecList: VarDec COMMA ExtDecList .
+
+    $default  reduce using rule 9 (ExtDecList)
+
+
+State 43
+
+   35 Def: Specifier DecList . SEMI
+
+    SEMI  shift, and go to state 67
+
+
+State 44
+
+   36 DecList: Dec .
+   37        | Dec . COMMA DecList
+
+    COMMA  shift, and go to state 68
+
+    $default  reduce using rule 36 (DecList)
+
+
+State 45
+
+   38 Dec: VarDec .
+   39    | VarDec . ASSIGNOP Exp
+   41 VarDec: VarDec . LB INT RB
+
+    LB        shift, and go to state 29
+    ASSIGNOP  shift, and go to state 69
+
+    $default  reduce using rule 38 (Dec)
+
+
+State 46
+
+   12 StructSpecifier: STRUCT OptTag LC DefList RC .
+
+    $default  reduce using rule 12 (StructSpecifier)
+
+
+State 47
+
+   33 DefList: Def DefList .
+
+    $default  reduce using rule 33 (DefList)
+
+
+State 48
+
+   22 ParamDec: Specifier VarDec .
+   41 VarDec: VarDec . LB INT RB
+
+    LB  shift, and go to state 29
+
+    $default  reduce using rule 22 (ParamDec)
+
+
+State 49
+
+   17 FunDec: ID LP VarList RP .
+
+    $default  reduce using rule 17 (FunDec)
+
+
+State 50
+
+   20 VarList: ParamDec COMMA . VarList
+
+    TYPE    shift, and go to state 2
+    STRUCT  shift, and go to state 3
+
+    Specifier        转到状态35
+    StructSpecifier  转到状态8
+    VarList          转到状态70
+    ParamDec         转到状态37
+
+
+State 51
+
+   32 Stmt: error . SEMI
+
+    SEMI  shift, and go to state 71
+
+
+State 52
+
+   59 Exp: INT .
+
+    $default  reduce using rule 59 (Exp)
+
+
+State 53
+
+   60 Exp: FLOAT .
+
+    $default  reduce using rule 60 (Exp)
+
+
+State 54
+
+   54 Exp: ID . LP Args RP
+   55    | ID . LP RP
+   58    | ID .
+
+    LP  shift, and go to state 72
+
+    $default  reduce using rule 58 (Exp)
+
+
+State 55
+
+   52 Exp: SUB . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态73
+
+
+State 56
+
+   53 Exp: NOT . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态74
+
+
+State 57
+
+   51 Exp: LP . Exp RP
+   61    | LP . error RP
+
+    error  shift, and go to state 75
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态76
+
+
+State 58
+
+   62 Exp: LB . error RB
+
+    error  shift, and go to state 77
+
+
+State 59
+
+   28 Stmt: RETURN . Exp SEMI
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态78
+
+
+State 60
+
+   29 Stmt: IF . LP Exp RP Stmt
+   30     | IF . LP Exp RP Stmt ELSE Stmt
+
+    LP  shift, and go to state 79
+
+
+State 61
+
+   31 Stmt: WHILE . LP Exp RP Stmt
+
+    LP  shift, and go to state 80
+
+
+State 62
+
+   27 Stmt: CompSt .
+
+    $default  reduce using rule 27 (Stmt)
+
+
+State 63
+
+   23 CompSt: LC DefList StmtList . RC
+
+    RC  shift, and go to state 81
+
+
+State 64
+
+   24 StmtList: Stmt . StmtList
+
+    error   shift, and go to state 51
+    INT     shift, and go to state 52
+    FLOAT   shift, and go to state 53
+    ID      shift, and go to state 54
+    SUB     shift, and go to state 55
+    NOT     shift, and go to state 56
+    LP      shift, and go to state 57
+    LB      shift, and go to state 58
+    LC      shift, and go to state 27
+    RETURN  shift, and go to state 59
+    IF      shift, and go to state 60
+    WHILE   shift, and go to state 61
+
+    RC  reduce using rule 25 (StmtList)
+
+    CompSt    转到状态62
+    StmtList  转到状态82
+    Stmt      转到状态64
+    Exp       转到状态65
+
+
+State 65
+
+   26 Stmt: Exp . SEMI
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    LB        shift, and go to state 90
+    SEMI      shift, and go to state 91
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+
+State 66
+
+   41 VarDec: VarDec LB INT RB .
+
+    $default  reduce using rule 41 (VarDec)
+
+
+State 67
+
+   35 Def: Specifier DecList SEMI .
+
+    $default  reduce using rule 35 (Def)
+
+
+State 68
+
+   37 DecList: Dec COMMA . DecList
+
+    ID  shift, and go to state 41
+    LB  shift, and go to state 17
+
+    DecList  转到状态94
+    Dec      转到状态44
+    VarDec   转到状态45
+
+
+State 69
+
+   39 Dec: VarDec ASSIGNOP . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态95
+
+
+State 70
+
+   20 VarList: ParamDec COMMA VarList .
+
+    $default  reduce using rule 20 (VarList)
+
+
+State 71
+
+   32 Stmt: error SEMI .
+
+    $default  reduce using rule 32 (Stmt)
+
+
+State 72
+
+   54 Exp: ID LP . Args RP
+   55    | ID LP . RP
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    RP     shift, and go to state 96
+    LB     shift, and go to state 58
+
+    Exp   转到状态97
+    Args  转到状态98
+
+
+State 73
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   52    | SUB Exp .
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    MUL  shift, and go to state 85
+    DIV  shift, and go to state 86
+    LB   shift, and go to state 90
+    DOT  shift, and go to state 93
+
+    $default  reduce using rule 52 (Exp)
+
+
+State 74
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   53    | NOT Exp .
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    LB   shift, and go to state 90
+    DOT  shift, and go to state 93
+
+    $default  reduce using rule 53 (Exp)
+
+
+State 75
+
+   61 Exp: LP error . RP
+
+    RP  shift, and go to state 99
+
+
+State 76
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   51    | LP Exp . RP
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    RP        shift, and go to state 100
+    LB        shift, and go to state 90
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+
+State 77
+
+   62 Exp: LB error . RB
+
+    RB  shift, and go to state 101
+
+
+State 78
+
+   28 Stmt: RETURN Exp . SEMI
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    LB        shift, and go to state 90
+    SEMI      shift, and go to state 102
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+
+State 79
+
+   29 Stmt: IF LP . Exp RP Stmt
+   30     | IF LP . Exp RP Stmt ELSE Stmt
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态103
+
+
+State 80
+
+   31 Stmt: WHILE LP . Exp RP Stmt
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态104
+
+
+State 81
+
+   23 CompSt: LC DefList StmtList RC .
+
+    $default  reduce using rule 23 (CompSt)
+
+
+State 82
+
+   24 StmtList: Stmt StmtList .
+
+    $default  reduce using rule 24 (StmtList)
+
+
+State 83
+
+   47 Exp: Exp ADD . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态105
+
+
+State 84
+
+   48 Exp: Exp SUB . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态106
+
+
+State 85
+
+   49 Exp: Exp MUL . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态107
+
+
+State 86
+
+   50 Exp: Exp DIV . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态108
+
+
+State 87
+
+   44 Exp: Exp AND . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态109
+
+
+State 88
+
+   45 Exp: Exp OR . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态110
+
+
+State 89
+
+   46 Exp: Exp RELOP . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态111
+
+
+State 90
+
+   56 Exp: Exp LB . Exp RB
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态112
+
+
+State 91
+
+   26 Stmt: Exp SEMI .
+
+    $default  reduce using rule 26 (Stmt)
+
+
+State 92
+
+   43 Exp: Exp ASSIGNOP . Exp
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp  转到状态113
+
+
+State 93
+
+   57 Exp: Exp DOT . ID
+
+    ID  shift, and go to state 114
+
+
+State 94
+
+   37 DecList: Dec COMMA DecList .
+
+    $default  reduce using rule 37 (DecList)
+
+
+State 95
+
+   39 Dec: VarDec ASSIGNOP Exp .
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    LB        shift, and go to state 90
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+    $default  reduce using rule 39 (Dec)
+
+
+State 96
+
+   55 Exp: ID LP RP .
+
+    $default  reduce using rule 55 (Exp)
+
+
+State 97
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+   63 Args: Exp . COMMA Args
+   64     | Exp .
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    LB        shift, and go to state 90
+    COMMA     shift, and go to state 115
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+    $default  reduce using rule 64 (Args)
+
+
+State 98
+
+   54 Exp: ID LP Args . RP
+
+    RP  shift, and go to state 116
+
+
+State 99
+
+   61 Exp: LP error RP .
+
+    $default  reduce using rule 61 (Exp)
+
+
+State 100
+
+   51 Exp: LP Exp RP .
+
+    $default  reduce using rule 51 (Exp)
+
+
+State 101
+
+   62 Exp: LB error RB .
+
+    $default  reduce using rule 62 (Exp)
+
+
+State 102
+
+   28 Stmt: RETURN Exp SEMI .
+
+    $default  reduce using rule 28 (Stmt)
+
+
+State 103
+
+   29 Stmt: IF LP Exp . RP Stmt
+   30     | IF LP Exp . RP Stmt ELSE Stmt
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    RP        shift, and go to state 117
+    LB        shift, and go to state 90
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+
+State 104
+
+   31 Stmt: WHILE LP Exp . RP Stmt
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    RP        shift, and go to state 118
+    LB        shift, and go to state 90
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+
+State 105
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   47    | Exp ADD Exp .
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    MUL  shift, and go to state 85
+    DIV  shift, and go to state 86
+    LB   shift, and go to state 90
+    DOT  shift, and go to state 93
+
+    $default  reduce using rule 47 (Exp)
+
+
+State 106
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   48    | Exp SUB Exp .
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    MUL  shift, and go to state 85
+    DIV  shift, and go to state 86
+    LB   shift, and go to state 90
+    DOT  shift, and go to state 93
+
+    $default  reduce using rule 48 (Exp)
+
+
+State 107
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   49    | Exp MUL Exp .
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    LB   shift, and go to state 90
+    DOT  shift, and go to state 93
+
+    $default  reduce using rule 49 (Exp)
+
+
+State 108
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   50    | Exp DIV Exp .
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    LB   shift, and go to state 90
+    DOT  shift, and go to state 93
+
+    $default  reduce using rule 50 (Exp)
+
+
+State 109
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   44    | Exp AND Exp .
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD    shift, and go to state 83
+    SUB    shift, and go to state 84
+    MUL    shift, and go to state 85
+    DIV    shift, and go to state 86
+    RELOP  shift, and go to state 89
+    LB     shift, and go to state 90
+    DOT    shift, and go to state 93
+
+    $default  reduce using rule 44 (Exp)
+
+
+State 110
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   45    | Exp OR Exp .
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD    shift, and go to state 83
+    SUB    shift, and go to state 84
+    MUL    shift, and go to state 85
+    DIV    shift, and go to state 86
+    AND    shift, and go to state 87
+    RELOP  shift, and go to state 89
+    LB     shift, and go to state 90
+    DOT    shift, and go to state 93
+
+    $default  reduce using rule 45 (Exp)
+
+
+State 111
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   46    | Exp RELOP Exp .
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD  shift, and go to state 83
+    SUB  shift, and go to state 84
+    MUL  shift, and go to state 85
+    DIV  shift, and go to state 86
+    LB   shift, and go to state 90
+    DOT  shift, and go to state 93
+
+    $default  reduce using rule 46 (Exp)
+
+
+State 112
+
+   43 Exp: Exp . ASSIGNOP Exp
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   56    | Exp LB Exp . RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    LB        shift, and go to state 90
+    RB        shift, and go to state 119
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+
+State 113
+
+   43 Exp: Exp . ASSIGNOP Exp
+   43    | Exp ASSIGNOP Exp .
+   44    | Exp . AND Exp
+   45    | Exp . OR Exp
+   46    | Exp . RELOP Exp
+   47    | Exp . ADD Exp
+   48    | Exp . SUB Exp
+   49    | Exp . MUL Exp
+   50    | Exp . DIV Exp
+   56    | Exp . LB Exp RB
+   57    | Exp . DOT ID
+
+    ADD       shift, and go to state 83
+    SUB       shift, and go to state 84
+    MUL       shift, and go to state 85
+    DIV       shift, and go to state 86
+    AND       shift, and go to state 87
+    OR        shift, and go to state 88
+    RELOP     shift, and go to state 89
+    LB        shift, and go to state 90
+    ASSIGNOP  shift, and go to state 92
+    DOT       shift, and go to state 93
+
+    $default  reduce using rule 43 (Exp)
+
+
+State 114
+
+   57 Exp: Exp DOT ID .
+
+    $default  reduce using rule 57 (Exp)
+
+
+State 115
+
+   63 Args: Exp COMMA . Args
+
+    INT    shift, and go to state 52
+    FLOAT  shift, and go to state 53
+    ID     shift, and go to state 54
+    SUB    shift, and go to state 55
+    NOT    shift, and go to state 56
+    LP     shift, and go to state 57
+    LB     shift, and go to state 58
+
+    Exp   转到状态97
+    Args  转到状态120
+
+
+State 116
+
+   54 Exp: ID LP Args RP .
+
+    $default  reduce using rule 54 (Exp)
+
+
+State 117
+
+   29 Stmt: IF LP Exp RP . Stmt
+   30     | IF LP Exp RP . Stmt ELSE Stmt
+
+    error   shift, and go to state 51
+    INT     shift, and go to state 52
+    FLOAT   shift, and go to state 53
+    ID      shift, and go to state 54
+    SUB     shift, and go to state 55
+    NOT     shift, and go to state 56
+    LP      shift, and go to state 57
+    LB      shift, and go to state 58
+    LC      shift, and go to state 27
+    RETURN  shift, and go to state 59
+    IF      shift, and go to state 60
+    WHILE   shift, and go to state 61
+
+    CompSt  转到状态62
+    Stmt    转到状态121
+    Exp     转到状态65
+
+
+State 118
+
+   31 Stmt: WHILE LP Exp RP . Stmt
+
+    error   shift, and go to state 51
+    INT     shift, and go to state 52
+    FLOAT   shift, and go to state 53
+    ID      shift, and go to state 54
+    SUB     shift, and go to state 55
+    NOT     shift, and go to state 56
+    LP      shift, and go to state 57
+    LB      shift, and go to state 58
+    LC      shift, and go to state 27
+    RETURN  shift, and go to state 59
+    IF      shift, and go to state 60
+    WHILE   shift, and go to state 61
+
+    CompSt  转到状态62
+    Stmt    转到状态122
+    Exp     转到状态65
+
+
+State 119
+
+   56 Exp: Exp LB Exp RB .
+
+    $default  reduce using rule 56 (Exp)
+
+
+State 120
+
+   63 Args: Exp COMMA Args .
+
+    $default  reduce using rule 63 (Args)
+
+
+State 121
+
+   29 Stmt: IF LP Exp RP Stmt .
+   30     | IF LP Exp RP Stmt . ELSE Stmt
+
+    ELSE  shift, and go to state 123
+
+    $default  reduce using rule 29 (Stmt)
+
+
+State 122
+
+   31 Stmt: WHILE LP Exp RP Stmt .
+
+    $default  reduce using rule 31 (Stmt)
+
+
+State 123
+
+   30 Stmt: IF LP Exp RP Stmt ELSE . Stmt
+
+    error   shift, and go to state 51
+    INT     shift, and go to state 52
+    FLOAT   shift, and go to state 53
+    ID      shift, and go to state 54
+    SUB     shift, and go to state 55
+    NOT     shift, and go to state 56
+    LP      shift, and go to state 57
+    LB      shift, and go to state 58
+    LC      shift, and go to state 27
+    RETURN  shift, and go to state 59
+    IF      shift, and go to state 60
+    WHILE   shift, and go to state 61
+
+    CompSt  转到状态62
+    Stmt    转到状态124
+    Exp     转到状态65
+
+
+State 124
+
+   30 Stmt: IF LP Exp RP Stmt ELSE Stmt .
+
+    $default  reduce using rule 30 (Stmt)

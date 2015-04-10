@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>	
-#include "Node.c"
+#include "Node.h"
 //#define YYSTYPE int
 #define YYERROR_VERBOSE 1
 struct Node *root;
@@ -300,105 +300,105 @@ VarDec : ID	{
 				 }
 	   ;
 Exp : Exp ASSIGNOP Exp	{
-							$$ = createNode(@1.first_line,NULL,"Expression");
+							$$ = createNode(@1.first_line,NULL,"Exp");
 							addNode($$,$1);
 							addNode($$,$2);
 							addNode($$,$3);
 						}
     | Exp AND Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp OR Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp RELOP Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp ADD Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp SUB Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp MUL Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | Exp DIV Exp	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | LP Exp RP	{
-					$$ = createNode(@1.first_line,NULL,"Expression");
+					$$ = createNode(@1.first_line,NULL,"Exp");
 					addNode($$,$1);
 					addNode($$,$2);
 					addNode($$,$3);
 				}
     | SUB Exp	{
-										$$ = createNode(@1.first_line,NULL,"Expression");
+										$$ = createNode(@1.first_line,NULL,"Exp");
 										addNode($$,$1);
 										addNode($$,$2);
 									}
     | NOT Exp	{
-					$$ = createNode(@1.first_line,NULL,"Expression");
+					$$ = createNode(@1.first_line,NULL,"Exp");
 					addNode($$,$1);
 					addNode($$,$2);
 				}
     | ID LP Args RP	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 						addNode($$,$4);
 					}
     | ID LP RP	{
-					$$ = createNode(@1.first_line,NULL,"Expression");
+					$$ = createNode(@1.first_line,NULL,"Exp");
 					addNode($$,$1);
 					addNode($$,$2);
 					addNode($$,$3);
 				}
     | Exp LB Exp RB	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 						addNode($$,$4);
 					}
     | Exp DOT ID	{
-						$$ = createNode(@1.first_line,NULL,"Expression");
+						$$ = createNode(@1.first_line,NULL,"Exp");
 						addNode($$,$1);
 						addNode($$,$2);
 						addNode($$,$3);
 					}
     | ID	{
-				$$ = createNode(@1.first_line,NULL,"Expression");
+				$$ = createNode(@1.first_line,NULL,"Exp");
 				addNode($$,$1);
 			}
     | INT	{
-				$$ = createNode(@1.first_line,NULL,"Expression");
+				$$ = createNode(@1.first_line,NULL,"Exp");
 				addNode($$,$1);
 			}
     | FLOAT	{
-				$$ = createNode(@1.first_line,NULL,"Expression");
+				$$ = createNode(@1.first_line,NULL,"Exp");
 				addNode($$,$1);
 			}
     | LP error RP 	{

@@ -47,42 +47,42 @@ ELSE else
 WHILE while
 %%
 " "|"	" {}
-"int"|"float" 	{	printf("type at line %d\n",line);
+"int"|"float" 	{	//printf("type at line %d\n",line);
 					yylval.node = (struct Node *)createNode(line,yytext,"TYPE"); 
 					return TYPE;
 				}
 {RELOP}	{
-			yylval.node = (struct Node *)createNode(line,yytext,"RELOP");
+			yylval.node = (struct Node *)createNode(line,NULL,"RELOP");
 			return RELOP;
 		}
-"(" 	{	yylval.node = (struct Node *)createNode(line,yytext,"LP");
+"(" 	{	yylval.node = (struct Node *)createNode(line,NULL,"LP");
 			return LP;
 		}
-")" 	{	yylval.node = (struct Node *)createNode(line,yytext,"RP");
+")" 	{	yylval.node = (struct Node *)createNode(line,NULL,"RP");
 			return RP;
 		}
-"[" 	{	yylval.node = (struct Node *)createNode(line,yytext,"LB");
+"[" 	{	yylval.node = (struct Node *)createNode(line,NULL,"LB");
 			return LB;
 		}
-"]" 	{	yylval.node = (struct Node *)createNode(line,yytext,"RB");
+"]" 	{	yylval.node = (struct Node *)createNode(line,NULL,"RB");
 			return RB;
 		}
-"{" 	{	yylval.node = (struct Node *)createNode(line,yytext,"LC");
+"{" 	{	yylval.node = (struct Node *)createNode(line,NULL,"LC");
 			return LC;
 		}
-"}" 	{	yylval.node = (struct Node *)createNode(line,yytext,"RC");
+"}" 	{	yylval.node = (struct Node *)createNode(line,NULL,"RC");
 			return RC;
 		}
-"struct" {	yylval.node = (struct Node *)createNode(line,yytext,"STRUCT");
+"struct" {	yylval.node = (struct Node *)createNode(line,NULL,"STRUCT");
 			return STRUCT;
 		 }
-"return" {	yylval.node = (struct Node *)createNode(line,yytext,"RETURN");
+"return" {	yylval.node = (struct Node *)createNode(line,NULL,"RETURN");
 			return RETURN;
 		 }
-"if" 	{	yylval.node = (struct Node *)createNode(line,yytext,"IF");
+"if" 	{	yylval.node = (struct Node *)createNode(line,NULL,"IF");
 			return IF;
 		}
-"else" 	{	yylval.node = (struct Node *)createNode(line,yytext,"ELSE");
+"else" 	{	yylval.node = (struct Node *)createNode(line,NULL,"ELSE");
 			return ELSE;
 		}
 "while" {	yylval.node = (struct Node *)createNode(line,yytext,"WHILE");
@@ -91,23 +91,23 @@ WHILE while
 ";" 	{	yylval.node = (struct Node *)createNode(line,yytext,"SEMI");
 			return SEMI;
 		}
-"," 	{	yylval.node = (struct Node *)createNode(line,yytext,"COMMA");
+"," 	{	yylval.node = (struct Node *)createNode(line,NULL,"COMMA");
 			return COMMA;
 		}
-"=" 	{	yylval.node = (struct Node *)createNode(line,yytext,"ASSIGNOP");
+"=" 	{	yylval.node = (struct Node *)createNode(line,NULL,"ASSIGNOP");
 			return ASSIGNOP;
 		}
-{FLOAT} {	printf("float at line %d at %s\n",line,yytext); 
+{FLOAT} {	//printf("float at line %d at %s\n",line,yytext); 
 			yylval.node = (struct Node *)createNode(line,yytext,"FLOAT");
 			sscanf(yytext, "%f", &(yylval.node->type_float));
 			return FLOAT;
 		}
-{INT} 	{	printf("int at line %d at %s\n",line,yytext);
+{INT} 	{	//printf("int at line %d at %s\n",line,yytext);
 			yylval.node = (struct Node *)createNode(line,yytext,"INT");
 			yylval.node->type_int = atoi(yytext); 
 			return INT;
 		}
-{ID} 	{	printf("id at line %d\n",line); 
+{ID} 	{	//printf("id at line %d\n",line); 
 			yylval.node = (struct Node *)createNode(line,yytext,"ID");
 			return ID;
 		}
@@ -115,29 +115,32 @@ WHILE while
 "+" 	{	yylval.node = (struct Node *)createNode(line,yytext,"ADD");
 			return ADD;
 		}
-"-" 	{	yylval.node = (struct Node *)createNode(line,yytext,"SUB");
+"-" 	{	yylval.node = (struct Node *)createNode(line,NULL,"SUB");
 			return SUB;
 		}
-"*" 	{	yylval.node = (struct Node *)createNode(line,yytext,"MUL");
+"*" 	{	yylval.node = (struct Node *)createNode(line,NULL,"MUL");
 			return MUL;
 		}
-"/" 	{	yylval.node = (struct Node *)createNode(line,yytext,"DIV");
+"/" 	{	yylval.node = (struct Node *)createNode(line,NULL,"DIV");
 			return DIV;
 		}
-"&&" 	{	yylval.node = (struct Node *)createNode(line,yytext,"AND");
+"&&" 	{	yylval.node = (struct Node *)createNode(line,NULL,"AND");
 			return AND;
 		}
-"||" 	{	yylval.node = (struct Node *)createNode(line,yytext,"OR");
+"||" 	{	yylval.node = (struct Node *)createNode(line,NULL,"OR");
 			return OR;
 		}
-"!" 	{	yylval.node = (struct Node *)createNode(line,yytext,"NOT");
+"!" 	{	yylval.node = (struct Node *)createNode(line,NULL,"NOT");
 			return NOT;
 		}
 "."     {
-			yylval.node = (struct Node *)createNode(line,yytext,"DOT");
+			yylval.node = (struct Node *)createNode(line,NULL,"DOT");
 			return DOT;
 		}
-. {printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);}
+. 	{
+		printf("error type A at Line %d : Mysterious characters \'%s\'\n",line,yytext);
+		has_error = 1;
+	}
 
 %% 
 
